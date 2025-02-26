@@ -7,12 +7,10 @@ def encode_lsb(image_path, data, apply_grayscale=False, apply_blur=False):
         raise ValueError("Data exceeds 128 characters limit.")
 
     image = Image.open(image_path)
-    
-    # Apply grayscale if selected
+
     if apply_grayscale:
         image = image.convert('L').convert('RGB')
 
-    # Apply blur if selected
     if apply_blur:
         image = image.filter(ImageFilter.BLUR)
 
@@ -24,7 +22,7 @@ def encode_lsb(image_path, data, apply_grayscale=False, apply_blur=False):
     pixels = np.array(image)
     for row in pixels:
         for pixel in row:
-            for channel in range(3):  # Iterate over RGB channels
+            for channel in range(3):  
                 if data_index < data_length:
                     pixel[channel] = int(format(pixel[channel], '08b')[:-1] + binary_data[data_index], 2)
                     data_index += 1
